@@ -1,0 +1,19 @@
+---
+title: "data_exploration"
+output: html_document
+date: "2024-03-05"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+dog <- read_csv(file = "/Users/catrinelberevoescu/Desktop/BIS15W2024_group15/dog_breeds_data/dogbreeddataset.xlsx - A.csv") 
+```
+
+
