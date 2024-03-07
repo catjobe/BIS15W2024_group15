@@ -1,6 +1,8 @@
 ---
-title: "data_exploration"
-output: html_document
+title: "Data Exploration and Processing"
+output: 
+  html_document: 
+    keep_md: true
 date: "2024-03-05"
 ---
 
@@ -8,12 +10,138 @@ date: "2024-03-05"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Loading the Libraries
+
 ```{r}
 library(tidyverse)
+library(janitor)
+library(naniar)
 ```
+
+## Loading the Data Set
 
 ```{r}
-dog <- read_csv(file = "/Users/catrinelberevoescu/Desktop/BIS15W2024_group15/dog_breeds_data/dogbreeddataset.xlsx - A.csv") 
+dog <- read_csv(file = "/Users/catrinelberevoescu/Desktop/BIS15W2024_group15/dog_breeds_data/dogbreeddataset.xlsx - A.csv")
 ```
 
+## Fixing the Headers
+
+### Renaming the headers as the values from the first row  
+
+```{r}
+names(dog) <- dog[1,]
+```
+
+### Removing the first row in the data set  
+
+```{r}
+dog <- dog %>% 
+        filter(!row_number() %in% 1) 
+```
+
+## Cleaning up the Variable Names.   
+
+```{r}
+dog <- clean_names(dog)
+```
+
+## Determining if the data is Tidy; Cleaning up the Data  
+
+```{r}
+summary(dog)
+```
+
+#### We notice that all the variables are of data class character, which is not desired for the variables `body_mass_kg`, `heigh_cm`.   
+
+### Where are the NA's?   
+
+```{r}
+miss_var_summary(dog)
+```
+
+\
+### Changing the Data Class of Certain Variables.   
+
+```{r}
+dog <- dog %>% 
+        mutate(body_mass_kg = as.numeric(body_mass_kg)) %>% 
+        mutate(height_cm = as.numeric(height_cm))
+```
+
+# Data Exploration   
+
+## How many distinct species of dog are included within this data set?   
+
+```{r}
+n_distinct(dog$breed)
+```
+
+## Which species of dog has the largest body mass?    
+
+```{r}
+dog %>% 
+       group_by(breed) %>% 
+        summarize(mean_body_weight = mean(body_mass_kg, na.rm = T)) %>% 
+        filter(mean_body_weight != "NaN") %>% 
+        arrange(desc(mean_body_weight))
+```
+
+## Which species of dog has the largest height?    
+
+```{r}
+dog %>% 
+       group_by(breed) %>% 
+        summarize(mean_height = mean(height_cm, na.rm = T)) %>% 
+        filter(mean_height != "NaN") %>% 
+        arrange(desc(mean_height))
+```
+
+## How do the top 5 heaviest dogs compare by sex?       
+
+```{r}
+dog %>% 
+        filter(sex != "NA") %>% 
+        unite(breed_sex, "breed", "sex", sep = " ") %>% 
+        filter(str_detect(.$breed_sex, "CaucasianOvcharka") | str_detect(.$breed_sex, "Boerboel") | str_detect(.$breed_sex, "EnglishMastiff") | str_detect(.$breed_sex, "SaintBernard") | str_detect(.$breed_sex, "TibetanMastiff")) %>% 
+        group_by(breed_sex) %>% 
+        summarize(mean_body_mass = mean(body_mass_kg, na.rm = T)) %>% 
+        separate(breed_sex, into = c("breed", "sex"), sep = " ") %>% 
+        ggplot(aes(x = breed, y = mean_body_mass, fill = sex)) +
+        geom_col(position = "dodge") +
+        labs(title = "Heaviest Dogs Compared by Sex",
+             x = "Breed",
+             y = "Mass (kg)",
+             fill = "Sex") +
+        theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
+```
+
+It seems that this dataset has strange or incomplete measurements for mass, so it may be more worthwhile to focus on height!   
+
+## How do the top 5 largest dogs compare by sex?       
+
+```{r}
+dog %>% 
+        filter(sex != "NA") %>% 
+        unite(breed_sex, "breed", "sex", sep = " ") %>% 
+        filter(str_detect(.$breed_sex, "GreatDane") | str_detect(.$breed_sex, "IrishWolfhound") | str_detect(.$breed_sex, "Landseer") | str_detect(.$breed_sex, "EnglishMastiff") | str_detect(.$breed_sex, "ScottishDeerhound")) %>% 
+        group_by(breed_sex) %>% 
+        summarize(mean_body_mass = mean(body_mass_kg, na.rm = T)) %>% 
+        separate(breed_sex, into = c("breed", "sex"), sep = " ") %>% 
+        ggplot(aes(x = breed, y = mean_body_mass, fill = sex)) +
+        geom_col(position = "dodge") +
+        labs(title = "Largest Dogs Compared by Sex",
+             x = "Breed",
+             y = "Height (cm)",
+             fill = "Sex") +
+        theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
+```
+
+This appears to show that there are also shows that there a lot of missing values in this dataset!   
+
+## Removing NA's from Sex Variable for Future Analyses   
+
+```{r}
+dog <- dog %>% 
+        filter(sex != "NA")
+```
 
