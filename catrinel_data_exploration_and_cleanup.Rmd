@@ -17,6 +17,8 @@ library(tidyverse)
 library(janitor)
 library(naniar)
 library(ggmap)
+library(shiny)
+library(shinydashboard)
 ```
 
 ## Loading the Data Set   
@@ -167,21 +169,126 @@ dog <- dog %>%
         filter(sex != "NA")
 ```
 
-## Top 5 Tallest Dogs versus 
+## Comparing Top Tallest Dogs versus Top Smallest Dogs by Alleles in Locations that are Important in Determining Dog Body Size    
+
+Test Visual:   
 
 ```{r}
 dog %>%
-        filter(breed == "GreatDane" | breed == "IrishWolfhound" | breed == "Akbash" | breed == "AnatolianShepherdDog" | breed == "ScottishDeerhound") %>%  
-        group_by(breed) %>% 
-        summarize(mean_body_mass = mean(body_mass_kg, na.rm = T)) %>% 
-        separate(breed_sex, into = c("breed", "sex"), sep = " ") %>% 
-        ggplot(aes(x = breed, y = mean_body_mass, fill = sex)) +
-        geom_col(position = "dodge") +
+        filter(breed == "GreatDane") %>% 
+        pivot_longer(cols = starts_with("chr15"),
+                     names_to = "chr_location",
+                     values_to = "marker_alleles_data") %>% 
+        ggplot(aes(x = chr_location, fill = marker_alleles_data)) +
+        geom_bar() +
+        labs(title = "Great Dane Comparing Alleles at 10 Positions Associated with Size",
+             x = "Position",
+             y = "Count",
+             fill = "Marker") +
+        theme(plot.title = element_text(size = rel(1.3), hjust = 0.5), axis.text.x = element_text(angle = 60, hjust = 1)) 
+```
+
+```{r}
+ui <- dashboardPage(
+  dashboardHeader(title = "Dogs and Markers"),
+  dashboardSidebar(disable=T),
+  dashboardBody(
+          
+          fluidRow(
+  box(title = "Plot Options", width = 3,
+  radioButtons("x", "Select Height Category", choices = c("small", "large"), selected = "large"),
+  ), #closes the first box
+  box(title = "Dog Size and Markers", width = 8,
+  plotOutput("plot", width = "500px", height = "400px")
+  
+  ) #closes the second box
+  ) #closes the row
+  ) #closes the dashboard body
+) #closes the ui 
+
+server <- function(input, output, session) {
+        
+        session$onSessionEnded(stopApp)
+        
+        output$plot <- renderPlot ({
+          
+        dog %>%
+        mutate(height_category = case_when(height_cm <= 20.0 ~ "small",
+                                           height_cm > 20.0 & height_cm < 73.0 ~ "medium",
+                                           height_cm >= 73.0 ~ "large")) %>% 
+        filter(height_category == "small" | height_category == "large") %>% 
+        pivot_longer(cols = starts_with("chr15"),
+                     names_to = "chr_location",
+                     values_to = "marker_alleles_data") %>% 
+        filter(height_category == input$x) %>% 
+        ggplot(aes(x = chr_location, fill = marker_alleles_data)) +
+        geom_bar() +
+        facet_wrap(breed~.) +
         labs(title = "Largest Dogs Compared by Sex",
-             x = "Breed",
-             y = "Height (cm)",
-             fill = "Sex") +
-        theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
+             x = "Position",
+             y = "Count",
+             fill = "Marker") +
+        theme(plot.title = element_text(size = rel(1.3), hjust = 0.5), axis.text.x = element_text(angle = 90, hjust = 1))
+        
+})
+        
+}
+
+shinyApp(ui, server)
+```
+
+## A New Long Format Object, and Comparing Alleles in Small vs Large Dogs   
+
+```{r}
+dog_long <- dog %>%
+        mutate(height_category = case_when(height_cm <= 20.0 ~ "small",
+                                           height_cm > 20.0 & height_cm < 73.0 ~ "medium",
+                                           height_cm >= 73.0 ~ "large")) %>% 
+        filter(height_category == "small" | height_category == "large") %>% 
+        pivot_longer(cols = starts_with("chr15"),
+                     names_to = "chr_location",
+                     values_to = "marker_alleles_data")
+```
+
+```{r}
+ui <- dashboardPage(
+  dashboardHeader(title = "Dogs and Markers"),
+  dashboardSidebar(disable=T),
+  dashboardBody(
+          
+          fluidRow(
+  box(title = "Plot Options", width = 3,
+  radioButtons("x", "Select Chromosome Position", choices = unique(dog_long$chr_location), hr()),
+  ), #closes the first box
+  box(title = "Dog Size and Markers", width = 8,
+  plotOutput("plot", width = "500px", height = "400px")
+  
+  ) #closes the second box
+  ) #closes the row
+  ) #closes the dashboard body
+) #closes the ui 
+
+server <- function(input, output, session) {
+        
+        session$onSessionEnded(stopApp)
+        
+        output$plot <- renderPlot ({
+          
+        dog_long %>%
+        filter(chr_location == input$x) %>% 
+        ggplot(aes(x = height_category, fill = marker_alleles_data)) +
+        geom_bar() +
+        labs(title = "Largest vs Smallest Dogs",
+             x = "Height Category",
+             y = "Count",
+             fill = "Marker") +
+        theme(plot.title = element_text(size = rel(1.3), hjust = 0.5), axis.text.x = element_text(angle = 90, hjust = 1))
+        
+})
+        
+}
+
+shinyApp(ui, server)
 ```
 
 ## Examining Geographic Distribution and Creating a Map  
@@ -193,6 +300,7 @@ dog %>%
   select(latitude, longitude) %>% 
   summary()
 ```
+
 ```{r}
 
 ```
