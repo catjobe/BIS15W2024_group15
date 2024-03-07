@@ -359,10 +359,10 @@ display: none;
 <h2>Loading the Libraries</h2>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ dplyr     1.1.4     ✔ readr     2.1.4
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
 ## ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
 ## ✔ purrr     1.0.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
@@ -379,7 +379,7 @@ display: none;
 </div>
 <div id="loading-the-data-set" class="section level2">
 <h2>Loading the Data Set</h2>
-<pre class="r"><code>dog &lt;- read_csv(file = &quot;/Users/catrinelberevoescu/Desktop/BIS15W2024_group15/dog_breeds_data/dogbreeddataset.xlsx - A.csv&quot;)</code></pre>
+<pre class="r"><code>dog &lt;- read_csv(file = &quot;/Users/catjobe/Desktop/BIS15W2024_group15/dog_breeds_data/dogbreeddataset.xlsx - A.csv&quot;)</code></pre>
 <pre><code>## New names:
 ## Rows: 1299 Columns: 25
 ## ── Column specification
@@ -489,8 +489,9 @@ is not desired for the variables <code>body_mass_kg</code>,
 ##  9 chr15_41221438    120     9.24
 ## 10 chr15_41228068    120     9.24
 ## # ℹ 15 more rows</code></pre>
-<p><br />
-### Changing the Data Class of Certain Variables.</p>
+</div>
+<div id="changing-the-data-class-of-certain-variables." class="section level3">
+<h3>Changing the Data Class of Certain Variables.</h3>
 <pre class="r"><code>dog &lt;- dog %&gt;% 
         mutate(body_mass_kg = as.numeric(body_mass_kg)) %&gt;% 
         mutate(height_cm = as.numeric(height_cm))</code></pre>
@@ -498,11 +499,19 @@ is not desired for the variables <code>body_mass_kg</code>,
 </div>
 <div id="data-exploration" class="section level1">
 <h1>Data Exploration</h1>
-<div id="how-many-distinct-species-of-dog-are-included-within-this-data-set" class="section level2">
-<h2>How many distinct species of dog are included within this data
+<div id="how-many-distinct-breeds-of-dog-are-included-within-this-data-set" class="section level2">
+<h2>How many distinct breeds of dog are included within this data
 set?</h2>
 <pre class="r"><code>n_distinct(dog$breed)</code></pre>
 <pre><code>## [1] 269</code></pre>
+</div>
+<div id="how-many-distinct-data-points-are-included-in-terms-of-body-weight-and-height-within-this-data-set" class="section level2">
+<h2>How many distinct data points are included (in terms of body weight
+and height) within this data set?</h2>
+<pre class="r"><code>n_distinct(dog$body_mass_kg)</code></pre>
+<pre><code>## [1] 142</code></pre>
+<pre class="r"><code>n_distinct(dog$height_cm)</code></pre>
+<pre><code>## [1] 104</code></pre>
 </div>
 <div id="which-species-of-dog-has-the-largest-body-mass" class="section level2">
 <h2>Which species of dog has the largest body mass?</h2>

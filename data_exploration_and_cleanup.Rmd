@@ -2,7 +2,7 @@
 title: "Data Exploration and Processing"
 output: 
   html_document: 
-    keep_md: true
+    keep_md: yes
 date: "2024-03-05"
 ---
 
@@ -18,10 +18,10 @@ library(janitor)
 library(naniar)
 ```
 
-## Loading the Data Set
+## Loading the Data Set   
 
 ```{r}
-dog <- read_csv(file = "/Users/catrinelberevoescu/Desktop/BIS15W2024_group15/dog_breeds_data/dogbreeddataset.xlsx - A.csv")
+dog <- read_csv(file = "/Users/catjobe/Desktop/BIS15W2024_group15/dog_breeds_data/dogbreeddataset.xlsx - A.csv")
 ```
 
 ## Fixing the Headers
@@ -59,7 +59,6 @@ summary(dog)
 miss_var_summary(dog)
 ```
 
-\
 ### Changing the Data Class of Certain Variables.   
 
 ```{r}
@@ -70,10 +69,20 @@ dog <- dog %>%
 
 # Data Exploration   
 
-## How many distinct species of dog are included within this data set?   
+## How many distinct breeds of dog are included within this data set?   
 
 ```{r}
 n_distinct(dog$breed)
+```
+
+## How many distinct data points are included (in terms of body weight and height) within this data set?   
+
+```{r}
+n_distinct(dog$body_mass_kg)
+```
+
+```{r}
+n_distinct(dog$height_cm)
 ```
 
 ## Which species of dog has the largest body mass?    

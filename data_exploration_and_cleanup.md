@@ -2,7 +2,7 @@
 title: "Data Exploration and Processing"
 output: 
   html_document: 
-    keep_md: true
+    keep_md: yes
 date: "2024-03-05"
 ---
 
@@ -17,10 +17,10 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ dplyr     1.1.4     ✔ readr     2.1.4
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
 ## ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
 ## ✔ purrr     1.0.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
@@ -45,11 +45,11 @@ library(janitor)
 library(naniar)
 ```
 
-## Loading the Data Set
+## Loading the Data Set   
 
 
 ```r
-dog <- read_csv(file = "/Users/catrinelberevoescu/Desktop/BIS15W2024_group15/dog_breeds_data/dogbreeddataset.xlsx - A.csv")
+dog <- read_csv(file = "/Users/catjobe/Desktop/BIS15W2024_group15/dog_breeds_data/dogbreeddataset.xlsx - A.csv")
 ```
 
 ```
@@ -185,7 +185,6 @@ miss_var_summary(dog)
 ## # ℹ 15 more rows
 ```
 
-\
 ### Changing the Data Class of Certain Variables.   
 
 
@@ -197,7 +196,7 @@ dog <- dog %>%
 
 # Data Exploration   
 
-## How many distinct species of dog are included within this data set?   
+## How many distinct breeds of dog are included within this data set?   
 
 
 ```r
@@ -206,6 +205,26 @@ n_distinct(dog$breed)
 
 ```
 ## [1] 269
+```
+
+## How many distinct data points are included (in terms of body weight and height) within this data set?   
+
+
+```r
+n_distinct(dog$body_mass_kg)
+```
+
+```
+## [1] 142
+```
+
+
+```r
+n_distinct(dog$height_cm)
+```
+
+```
+## [1] 104
 ```
 
 ## Which species of dog has the largest body mass?    
@@ -284,7 +303,7 @@ dog %>%
         theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
 ```
 
-![](data_exploration_and_cleanup_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+![](data_exploration_and_cleanup_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
 
 It seems that this dataset has strange or incomplete measurements for mass, so it may be more worthwhile to focus on height!   
 
@@ -308,7 +327,7 @@ dog %>%
         theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
 ```
 
-![](data_exploration_and_cleanup_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+![](data_exploration_and_cleanup_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
 
 This appears to show that there are also shows that there a lot of missing values in this dataset!   
 
