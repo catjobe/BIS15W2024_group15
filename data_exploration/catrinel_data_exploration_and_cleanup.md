@@ -232,6 +232,11 @@ dog <- dog %>%
 ## ! NAs introduced by coercion
 ```
 
+
+```r
+#write_csv(dog, "clean_dog_data.csv") #saving the clean data
+```
+
 # Data Exploration   
 
 ## How many distinct breeds of dog are included within this data set?   
@@ -371,7 +376,7 @@ dog %>%
         theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
 ```
 
-![](catrinel_data_exploration_and_cleanup_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+![](catrinel_data_exploration_and_cleanup_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
 
 It seems that this dataset has strange or incomplete measurements for mass, so it may be more worthwhile to focus on height!   
 
@@ -395,7 +400,7 @@ dog %>%
         theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
 ```
 
-![](catrinel_data_exploration_and_cleanup_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
+![](catrinel_data_exploration_and_cleanup_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
 
 This appears to show that there are also shows that there a lot of missing values in this dataset!   
 
@@ -427,7 +432,7 @@ dog %>%
         theme(plot.title = element_text(size = rel(1.3), hjust = 0.5), axis.text.x = element_text(angle = 60, hjust = 1)) 
 ```
 
-![](catrinel_data_exploration_and_cleanup_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
+![](catrinel_data_exploration_and_cleanup_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
 
 
 ```r
@@ -497,6 +502,11 @@ dog_long <- dog %>%
                      values_to = "marker_alleles_data")
 ```
 
+
+```r
+#write_csv(dog_long, "dog_long.csv")
+```
+
 Test Visual:   
 
 
@@ -512,7 +522,7 @@ dog_long %>%
         theme(plot.title = element_text(size = rel(1.3), hjust = 0.5), axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-![](catrinel_data_exploration_and_cleanup_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
+![](catrinel_data_exploration_and_cleanup_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
 
 
 ```r

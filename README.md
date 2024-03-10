@@ -10,4 +10,10 @@ This repository includes a dataset on Modern Dog Breeds from the following study
 
 Examine our data in the [data folder](https://github.com/catjobe/BIS15W2024_group15/tree/main/dog_breeds_data), which contains the original data, a cleaned-up data file, and a pivoted data file.   
 
-Our data exploration process is documented in the 
+Our data exploration process is documented in the [data exploration folder](https://github.com/catjobe/BIS15W2024_group15/tree/main/data_exploration).   
+
+Our methods and processes are identified in the [process and methods folder](https://github.com/catjobe/BIS15W2024_group15/tree/main/process_and_methods), which contains the following information:
+[Our Code]()   
+[Applications](https://github.com/catjobe/BIS15W2024_group15/tree/main/process_and_methods/apps).    
+
+A presentation of our project's findings and code will be included in a PowerPoint within the [presentation folder]().   

@@ -518,6 +518,7 @@ is not desired for the variables <code>body_mass_kg</code>,
 ## ℹ In argument: `longitude = as.numeric(longitude)`.
 ## Caused by warning:
 ## ! NAs introduced by coercion</code></pre>
+<pre class="r"><code>#write_csv(dog, &quot;clean_dog_data.csv&quot;) #saving the clean data</code></pre>
 </div>
 </div>
 <div id="data-exploration" class="section level1">
@@ -727,6 +728,7 @@ Dogs</h2>
         pivot_longer(cols = starts_with(&quot;chr15&quot;),
                      names_to = &quot;chr_location&quot;,
                      values_to = &quot;marker_alleles_data&quot;)</code></pre>
+<pre class="r"><code>#write_csv(dog_long, &quot;dog_long.csv&quot;)</code></pre>
 <p>Test Visual:</p>
 <pre class="r"><code>dog_long %&gt;%
         filter(chr_location == &quot;chr15_41216098&quot;) %&gt;% 
