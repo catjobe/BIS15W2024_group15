@@ -17,10 +17,10 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.4
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
 ## ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
 ## ✔ purrr     1.0.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
@@ -67,11 +67,11 @@ library(shinydashboard)
 ##     box
 ```
 
-## Loading the Data Set   
+## Loading the Data Set  
 
 
 ```r
-dog <- read_csv(file = "/Users/catjobe/Desktop/BIS15W2024_group15/dog_breeds_data/dogbreeddataset.xlsx - A.csv")
+dog <- read_csv(file = "../dog_breeds_data/dogbreeddataset.xlsx - A.csv")
 ```
 
 ```
@@ -181,7 +181,7 @@ summary(dog)
 ##  Mode  :character
 ```
 
-#### We notice that all the variables are of data class character, which is not desired for the variables `body_mass_kg`, `heigh_cm`.   
+#### We notice that all the variables are of data class character, which is not desired for the variables `body_mass_kg`, `height_cm`.   
 
 ### Where are the NA's?   
 
@@ -264,6 +264,8 @@ n_distinct(dog$height_cm)
 ```
 ## [1] 104
 ```
+
+This could indicate some strange method or issue in the collection of data. However, since there is no information in the paper about the method of data collection for these variables, we are assuming that the data is correct.   
 
 ## Which breed of dog has the largest body mass?    
 
@@ -464,7 +466,7 @@ server <- function(input, output, session) {
         ggplot(aes(x = chr_location, fill = marker_alleles_data)) +
         geom_bar() +
         facet_wrap(breed~.) +
-        labs(title = "Largest Dogs Compared by Sex",
+        labs(title = "Dogs Compared by Alleles at 10 Positions",
              x = "Position",
              y = "Count",
              fill = "Marker") +
@@ -495,6 +497,23 @@ dog_long <- dog %>%
                      values_to = "marker_alleles_data")
 ```
 
+Test Visual:   
+
+
+```r
+dog_long %>%
+        filter(chr_location == "chr15_41216098") %>% 
+        ggplot(aes(x = height_category, fill = marker_alleles_data)) +
+        geom_bar() +
+        labs(title = "Largest vs Smallest Dogs",
+             x = "Height Category",
+             y = "Count",
+             fill = "Marker") +
+        theme(plot.title = element_text(size = rel(1.3), hjust = 0.5), axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+![](catrinel_data_exploration_and_cleanup_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
+
 
 ```r
 ui <- dashboardPage(
@@ -504,7 +523,7 @@ ui <- dashboardPage(
           
           fluidRow(
   box(title = "Plot Options", width = 3,
-  radioButtons("x", "Select Chromosome Position", choices = unique(dog_long$chr_location), hr()),
+  selectInput("x", "Select Chromosome Position", choices = unique(dog_long$chr_location), hr()),
   ), #closes the first box
   box(title = "Dog Size and Markers", width = 8,
   plotOutput("plot", width = "500px", height = "400px")
@@ -541,27 +560,65 @@ shinyApp(ui, server)
 <div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div>
 ```
 
-## Examining Geographic Distribution and Creating a Map  
+These results show a clear association between the alleles at these positions and the size of the dogs.   
 
-
+## Examining Geographic Distribution of Large and Small Dogs by Creating a Map  
 
 
 ```r
-dog %>% 
+dog_long %>% 
   select(latitude, longitude) %>% 
+  filter(!is.na(latitude) & !is.na(longitude)) %>%
   summary()
 ```
 
 ```
-##     latitude          longitude     
-##  Min.   :-154.548   Min.   :-38.04  
-##  1st Qu.:  -2.899   1st Qu.: 44.42  
-##  Median :  -0.119   Median : 51.17  
-##  Mean   :  11.785   Mean   : 45.73  
-##  3rd Qu.:  13.573   3rd Qu.: 52.51  
-##  Max.   : 151.969   Max.   : 68.12  
-##  NA's   :153        NA's   :153
+##     latitude          longitude    
+##  Min.   :-106.122   Min.   :28.59  
+##  1st Qu.:  -1.917   1st Qu.:52.47  
+##  Median :  -1.917   Median :52.47  
+##  Mean   :  -2.707   Mean   :51.74  
+##  3rd Qu.:  -1.917   3rd Qu.:52.47  
+##  Max.   : 116.398   Max.   :55.95
 ```
 
 
+```r
+#latitude_dogs <- c(-3, 3)
+#longitude_dogs <- c(28, 40)
+#bbox_dogs <- make_bbox(longitude_dogs, latitude_dogs, f = 0.03)
+```
 
+
+```r
+#latitude_dogs_europe <- c(-106, 117)
+#longitude_dogs_europe <- c(28, 40)
+#bbox_dogs_europe <- make_bbox(longitude_dogs_europe, latitude_dogs_europe, f = 0.03)
+```
+
+
+```r
+#latitude_test <- c(-10, 10)
+#longitude_test <- c(-10, 10)
+#bbox_tests <- make_bbox(longitude_test, latitude_test, f = 0.03)
+```
+
+
+```r
+#map <- get_stadiamap(bbox_tests, maptype = "stamen_terrain", zoom = 7)
+```
+
+
+```r
+#map_dogs <- get_stadiamap(bbox_dogs, maptype = "stamen_terrain", zoom = 7)
+```
+
+
+```r
+#map_dogs_europe <- get_stadiamap(bbox_dogs_europe, maptype = "stamen_terrain", zoom = 7)
+```
+
+
+```r
+#ggmap(map_dogs)
+```
