@@ -14,6 +14,6 @@ Our data exploration process is documented in the [data exploration folder](http
 
 Our methods and processes are identified in the [process and methods folder](https://github.com/catjobe/BIS15W2024_group15/tree/main/process_and_methods), which contains the following information:      
 [Our Code]()   
-[Applications](https://github.com/catjobe/BIS15W2024_group15/tree/main/process_and_methods/apps).    
+[Applications](https://github.com/catjobe/BIS15W2024_group15/tree/main/process_and_methods/apps)    
 
 A presentation of our project's findings and code will be included in a PowerPoint within the [presentation folder]().   
