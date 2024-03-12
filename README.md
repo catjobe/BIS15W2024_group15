@@ -16,4 +16,4 @@ Our methods and processes are identified in the [process and methods folder](htt
 [Our Code]()   
 [Applications](https://github.com/catjobe/BIS15W2024_group15/tree/main/process_and_methods/apps)    
 
-A presentation of our project's findings and code will be included in a PowerPoint within the [presentation folder]().   
+A presentation of our project's findings and code will be included in a PowerPoint within the [presentation folder](https://github.com/catjobe/BIS15W2024_group15/tree/main/presentation).   
