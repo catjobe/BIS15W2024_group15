@@ -323,6 +323,8 @@ dog %>%
   summarise(meanbodymass = mean(body_mass_kg, na.rm=T)) %>%
   ggplot(aes(x = igf1_as_genotype, y = meanbodymass, fill = igf1_as_genotype)) +
   geom_col() +
+  scale_fill_brewer(palette = "Spectral") +
+  theme_minimal() +
   labs(title = "Comparing Mean Mass by IGF1 Genotype", 
        x = "IGF1 Genotype", 
        y= "Mean Body Mass (kg)",
