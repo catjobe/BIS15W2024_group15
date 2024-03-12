@@ -24,7 +24,7 @@ library(shinydashboard)
 ## Loading the Data Set   
 
 ```{r}
-dog <- read_csv(file = "/Users/boy/Desktop/BIS15W2024_rchu/BIS15W2024_group15-main/BIS15W2024_group15-main/dog_breeds_data/dogbreeddataset.xlsx - A.csv")
+dog <- read_csv(file = "../data/dogbreeddataset.xlsx - A.csv")
 ```
 
 ## Fixing the Headers
@@ -313,8 +313,8 @@ dog %>%
 ```{r}
 dog %>%
   group_by(igf1_as_genotype) %>%
-  summarise(meanbodymass=mean(body_mass_kg, na.rm=T)) %>%
-  ggplot(aes(x=igf1_as_genotype, y=meanbodymass))+
+  summarize(meanbodymass=mean(body_mass_kg, na.rm=T)) %>%
+  ggplot(aes(x = igf1_as_genotype, y = meanbodymass))+
   geom_col()+
   labs(title = "IGF1 Mass", x = "IGF1 Genotype", y= "Mean Body Mass (kg)")+
   theme(plot.title = element_text(size = rel(1.3)))
@@ -348,7 +348,7 @@ dog_gwas %>%
   summarise(meanbodymass=mean(body_mass_kg, na.rm=T)) %>%
   ggplot(aes(x=igf1_as_genotype, y=meanbodymass))+
   geom_col()+
-  labs(title = "IGF1 Mass", x = "IGF1 Genotype", y= "Mean Body Mass (kg)")+
+  labs(title = "IGF1 GWAS Mass", x = "IGF1 Genotype", y= "Mean Body Mass (kg)")+
   theme(plot.title = element_text(size = rel(1.3)))
 ```
 
@@ -359,7 +359,7 @@ dog_gwas %>%
   summarise(meanheight=mean(height_cm, na.rm=T)) %>%
   ggplot(aes(x=igf1_as_genotype, y=meanheight))+
   geom_col()+
-  labs(title = "IGF1 Height", x = "IGF1 Genotype", y= "Mean Height(cm)")+
+  labs(title = "IGF1 GWAS Height", x = "IGF1 Genotype", y= "Mean Height(cm)")+
   theme(plot.title = element_text(size = rel(1.3)))
 ```
 
