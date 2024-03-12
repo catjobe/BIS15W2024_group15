@@ -17,7 +17,7 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ dplyr     1.1.4     ✔ readr     2.1.4
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
 ## ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
 ## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
@@ -47,10 +47,6 @@ library(ggmap)
 ```
 
 ```
-## Warning: package 'ggmap' was built under R version 4.3.3
-```
-
-```
 ## ℹ Google's Terms of Service: <https://mapsplatform.google.com>
 ##   Stadia Maps' Terms of Service: <https://stadiamaps.com/terms-of-service/>
 ##   OpenStreetMap's Tile Usage Policy: <https://operations.osmfoundation.org/policies/tiles/>
@@ -59,18 +55,7 @@ library(ggmap)
 
 ```r
 library(shiny)
-```
-
-```
-## Warning: package 'shiny' was built under R version 4.3.3
-```
-
-```r
 library(shinydashboard)
-```
-
-```
-## Warning: package 'shinydashboard' was built under R version 4.3.3
 ```
 
 ```
@@ -86,7 +71,7 @@ library(shinydashboard)
 
 
 ```r
-dog <- read_csv(file = "/Users/boy/Desktop/BIS15W2024_rchu/BIS15W2024_group15-main/BIS15W2024_group15-main/dog_breeds_data/dogbreeddataset.xlsx - A.csv")
+dog <- read_csv(file = "../data/dogbreeddataset.xlsx - A.csv")
 ```
 
 ```

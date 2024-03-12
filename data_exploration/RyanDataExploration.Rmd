@@ -24,7 +24,7 @@ library(shinydashboard)
 ## Loading the Data Set   
 
 ```{r}
-dog <- read_csv(file = "/Users/boy/Desktop/BIS15W2024_rchu/BIS15W2024_group15-main/BIS15W2024_group15-main/dog_breeds_data/dogbreeddataset.xlsx - A.csv")
+dog <- read_csv(file = "../data/dogbreeddataset.xlsx - A.csv")
 ```
 
 ## Fixing the Headers
