@@ -258,3 +258,15 @@ dog_long <- dog %>%
 #write_csv(dog, "dog_long.csv") #saving the clean data
 ```
 
+## Creating and saving an object with only dogs used in the GWAS.  
+
+
+```r
+dog_gwas <- filter(dog, used_for_gwas == "Yes")
+```
+
+
+```r
+#write_csv(dog_gwas, "dog_gwas.csv") 
+```
+

@@ -3,6 +3,7 @@
 library(tidyverse)
 library(shiny)
 library(shinydashboard)
+library(RColorBrewer)
 
 dog <- read_csv(file = "../../data/clean_dog_data.csv")
 
@@ -41,6 +42,8 @@ server <- function(input, output, session) {
                         ggplot(aes(x = chr_location, fill = marker_alleles_data)) +
                         geom_bar() +
                         facet_wrap(breed~.) +
+                        scale_fill_brewer(palette = "Spectral") +
+                        theme_minimal() +
                         labs(title = "Dogs Compared by Alleles at 10 Positions",
                              x = "Position",
                              y = "Count",

@@ -1,0 +1,55 @@
+## Top 5 Small vs Large Dogs Compared by Alleles in Key Loci for Determining Dog Size for ONLY GWAS: A Shiny App 
+
+library(tidyverse)
+library(shiny)
+library(shinydashboard)
+library(RColorBrewer)
+
+dog_gwas <- read_csv(file = "../../data/dog_gwas.csv")
+
+ui <- dashboardPage(
+  dashboardHeader(title = "GWAS Dogs and Markers"),
+  dashboardSidebar(disable=T),
+  dashboardBody(
+    
+    fluidRow(
+      box(title = "Plot Options", width = 3,
+          radioButtons("x", "Select Height Category", choices = c("small", "large"), selected = "large"),
+      ), #closes the first box
+      box(title = "Dog Size and Markers", width = 8,
+          plotOutput("plot", width = "500px", height = "400px")
+          
+      ) #closes the second box
+    ) #closes the row
+  ) #closes the dashboard body
+) #closes the ui 
+
+server <- function(input, output, session) {
+  
+  session$onSessionEnded(stopApp)
+  
+  output$plot <- renderPlot ({
+    
+    dog_gwas %>%
+      mutate(height_category = case_when(height_cm <= 20.0 ~ "small",
+                                         height_cm > 20.0 & height_cm < 73.0 ~ "medium",
+                                         height_cm >= 73.0 ~ "large")) %>% 
+      filter(height_category == "small" | height_category == "large") %>% 
+      filter(height_category == input$x) %>% 
+      ggplot(aes(x = chr_location, fill = marker_alleles_data)) +
+      geom_bar() +
+      facet_wrap(breed~.) +
+      scale_fill_brewer(palette = "Spectral") +
+      theme_minimal() +
+      labs(title = "Dogs Compared by Alleles at 10 Positions",
+           x = "Position",
+           y = "Count",
+           fill = "Marker") +
+      theme(plot.title = element_text(size = rel(1.3), hjust = 0.5), axis.text.x = element_text(angle = 90, hjust = 1))
+    
+  })
+  
+}
+
+shinyApp(ui, server)
+

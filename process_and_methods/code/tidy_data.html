@@ -536,6 +536,11 @@ is not desired for variables including <code>body_mass_kg</code>,
                      values_to = &quot;marker_alleles_data&quot;)</code></pre>
 <pre class="r"><code>#write_csv(dog, &quot;dog_long.csv&quot;) #saving the clean data</code></pre>
 </div>
+<div id="creating-and-saving-an-object-with-only-dogs-used-in-the-gwas." class="section level2">
+<h2>Creating and saving an object with only dogs used in the GWAS.</h2>
+<pre class="r"><code>dog_gwas &lt;- filter(dog, used_for_gwas == &quot;Yes&quot;)</code></pre>
+<pre class="r"><code>#write_csv(dog_gwas, &quot;dog_gwas.csv&quot;) </code></pre>
+</div>
 
 
 

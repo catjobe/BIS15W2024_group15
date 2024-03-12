@@ -3,6 +3,7 @@
 library(tidyverse)
 library(shiny)
 library(shinydashboard)
+library(RColorBrewer)
 
 dog_long <- read_csv(file = "../../data/dog_long.csv")
 
@@ -33,6 +34,8 @@ server <- function(input, output, session) {
                         filter(chr_location == input$x) %>% 
                         ggplot(aes(x = height_category, fill = marker_alleles_data)) +
                         geom_bar() +
+                        scale_fill_brewer(palette = "Spectral") +
+                        theme_minimal() +
                         labs(title = "Largest vs Smallest Dogs",
                              x = "Height Category",
                              y = "Count",
