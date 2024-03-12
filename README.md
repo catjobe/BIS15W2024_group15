@@ -8,7 +8,7 @@ This repository includes a dataset on Modern Dog Breeds from the following study
 
 ## Feel Free to Explore our Project Repository!   
 
-Examine our data in the [data folder](https://github.com/catjobe/BIS15W2024_group15/tree/main/dog_breeds_data), which contains the original data, a cleaned-up data file, and a pivoted data file.   
+Examine our data in the [data folder](https://github.com/catjobe/BIS15W2024_group15/tree/main/data), which contains the original data, a cleaned-up data file, and a pivoted data file.   
 
 Our data exploration process is documented in the [data exploration folder](https://github.com/catjobe/BIS15W2024_group15/tree/main/data_exploration).   
 
