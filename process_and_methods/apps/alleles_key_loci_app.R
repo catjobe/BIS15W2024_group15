@@ -4,7 +4,7 @@ library(tidyverse)
 library(shiny)
 library(shinydashboard)
 
-dog <- read_csv(file = "../../dog_breeds_data/dog_long.csv")
+dog_long <- read_csv(file = "../../data/dog_long.csv")
 
 ui <- dashboardPage(
         dashboardHeader(title = "Dogs and Markers"),

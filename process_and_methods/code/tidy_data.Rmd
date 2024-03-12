@@ -1,0 +1,97 @@
+---
+title: "tidy_data"
+output: 
+  html_document: 
+    keep_md: yes
+date: "2024-03-12"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Loading the Libraries
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(naniar)
+library(ggmap)
+library(shiny)
+library(shinydashboard)
+```
+
+## Loading the Data Set  
+
+```{r}
+dog <- read_csv(file = "../../data/dogbreeddataset.xlsx - A.csv")
+```
+
+## Fixing the Headers
+
+### Renaming the headers as the values from the first row  
+
+```{r}
+names(dog) <- dog[1,]
+```
+
+### Removing the first row in the data set  
+
+```{r}
+dog <- dog %>% 
+        filter(!row_number() %in% 1) 
+```
+
+## Cleaning up the variable names   
+
+```{r}
+dog <- clean_names(dog)
+```
+
+## Determining if the data is tidy and cleaning up the data  
+
+```{r}
+summary(dog)
+```
+
+#### We notice that all the variables are of data class character, which is not desired for variables including `body_mass_kg`, `height_cm`.   
+
+## Where are the NA's?   
+
+```{r}
+miss_var_summary(dog)
+```
+
+## Changing the data class of certain variables.   
+
+```{r}
+dog <- dog %>% 
+        mutate(body_mass_kg = as.numeric(body_mass_kg)) %>% 
+        mutate(height_cm = as.numeric(height_cm)) %>% 
+        mutate(latitude = as.numeric(latitude)) %>% 
+        mutate(longitude = as.numeric(longitude))
+```
+
+## Saving the cleaned up data set as new file     
+
+```{r}
+#write_csv(dog, "clean_dog_data.csv") #saving the clean data
+```
+
+## Creating and saving new long format object   
+
+```{r}
+dog_long <- dog %>%
+        mutate(height_category = case_when(height_cm <= 20.0 ~ "small",
+                                           height_cm > 20.0 & height_cm < 73.0 ~ "medium",
+                                           height_cm >= 73.0 ~ "large")) %>% 
+        filter(height_category == "small" | height_category == "large") %>% 
+        pivot_longer(cols = starts_with("chr15"),
+                     names_to = "chr_location",
+                     values_to = "marker_alleles_data")
+```
+
+```{r}
+#write_csv(dog, "dog_long.csv") #saving the clean data
+```
+
