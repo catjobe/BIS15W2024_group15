@@ -3,7 +3,7 @@
     "path": "~/Desktop/BIS15W2024_group15/data_exploration/catrinel_data_exploration_and_cleanup.Rmd",
     "project_path": "data_exploration/catrinel_data_exploration_and_cleanup.Rmd",
     "type": "r_markdown",
-    "hash": "642598861",
+    "hash": "726028872",
     "contents": "",
     "dirty": false,
     "created": 1710289954146.0,
@@ -12,16 +12,16 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "107,0",
-        "scrollLine": "103",
+        "cursorPosition": "359,70",
+        "scrollLine": "361",
         "last_setup_crc32": "d0171714bb338d19"
     },
     "folds": "",
-    "lastKnownWriteTime": 1710293927,
+    "lastKnownWriteTime": 1710358730,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1710293927655,
+    "last_content_update": 1710358730070,
     "read_only": false,
     "read_only_alternatives": []
 }

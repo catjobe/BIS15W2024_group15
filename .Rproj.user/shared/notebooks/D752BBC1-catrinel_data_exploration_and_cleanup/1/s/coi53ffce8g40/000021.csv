@@ -1,5 +1,0 @@
-"0","dog_gwas %>% "
-"0","        filter(longitude != ""NA"" | latitude != ""NA"") %>%"
-"0","        mapview(xcol = ""longitude"", ycol = ""latitude"", crs = 4269)"
-"2","Error in data[[y]] * aspect : non-numeric argument to binary operator
-"

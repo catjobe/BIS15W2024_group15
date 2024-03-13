@@ -349,11 +349,15 @@ library(sf)
 ```
 
 ```{r}
-#dog_gwas_sf <- dog_gwas %>% 
-        #filter(longitude != "NA" | latitude != "NA") %>%
-        #filter(longitude != "NA" | latitude != "NA") %>%
-        #filter(longitude != "#N/A" | latitude != "#N/A") %>%
-        #st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
+dog_gwas_sf <- dog_gwas %>% 
+        filter(longitude != "NA" | latitude != "NA") %>%
+        filter(longitude != "NA" | latitude != "NA") %>%
+        filter(longitude != "#N/A" | latitude != "#N/A") %>%
+        st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
+```
+
+```{r}
+mapview(dog_geographic_distribution, zcol = "height_category", legend = TRUE, map.types = "CartoDB.Positron") 
 ```
 
 ```{r}
