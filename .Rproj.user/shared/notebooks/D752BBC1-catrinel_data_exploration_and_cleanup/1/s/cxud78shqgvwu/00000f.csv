@@ -1,0 +1,3 @@
+"0","map <- get_stadiamap(bbox_tests, maptype = ""stamen_terrain"", zoom = 7)"
+"2","Error: object 'bbox_tests' not found
+"

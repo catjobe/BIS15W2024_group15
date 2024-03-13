@@ -1,0 +1,9 @@
+"0","ui <- dashboardPage("
+"0","  dashboardHeader(title = ""GWAS Dogs""),"
+"0","  dashboardSidebar(sidebarMenu("
+"0","                menuItem(""Markers"", tabName = ""Markers and Dog Size""))"
+"0","  dashboardBody("
+"2","Error: unexpected symbol in:
+""                menuItem(""Markers"", tabName = ""Markers and Dog Size""))
+  dashboardBody""
+"

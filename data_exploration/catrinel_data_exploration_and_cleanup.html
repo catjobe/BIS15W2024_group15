@@ -392,7 +392,7 @@ library(shinydashboard)</code></pre>
 </div>
 <div id="loading-the-data-set" class="section level2">
 <h2>Loading the Data Set</h2>
-<pre class="r"><code>dog &lt;- read_csv(file = &quot;../dog_breeds_data/dogbreeddataset.xlsx - A.csv&quot;)</code></pre>
+<pre class="r"><code>dog &lt;- read_csv(file = &quot;../data/dogbreeddataset.xlsx - A.csv&quot;)</code></pre>
 <pre><code>## New names:
 ## Rows: 1299 Columns: 25
 ## ── Column specification
@@ -547,21 +547,15 @@ data is correct.</p>
        group_by(breed) %&gt;% 
         summarize(mean_body_weight = mean(body_mass_kg, na.rm = T)) %&gt;% 
         filter(mean_body_weight != &quot;NaN&quot;) %&gt;% 
-        arrange(desc(mean_body_weight))</code></pre>
-<pre><code>## # A tibble: 207 × 2
-##    breed                   mean_body_weight
-##    &lt;chr&gt;                              &lt;dbl&gt;
-##  1 CaucasianOvcharka                   75  
-##  2 Boerboel                            73  
-##  3 EnglishMastiff                      70.3
-##  4 SaintBernard                        70.3
-##  5 TibetanMastiff                      70.3
-##  6 TosaInu                             68  
-##  7 GreatDane                           62.4
-##  8 GreaterSwissMountainDog             60  
-##  9 NeapolitanMastiff                   60  
-## 10 DogueDeBordeaux                     59.5
-## # ℹ 197 more rows</code></pre>
+        arrange(desc(mean_body_weight)) %&gt;% 
+        summary()</code></pre>
+<pre><code>##     breed           mean_body_weight
+##  Length:207         Min.   : 1.80   
+##  Class :character   1st Qu.:10.00   
+##  Mode  :character   Median :21.50   
+##                     Mean   :23.69   
+##                     3rd Qu.:32.00   
+##                     Max.   :75.00</code></pre>
 </div>
 <div id="which-breed-of-dog-has-the-largest-height" class="section level2">
 <h2>Which breed of dog has the largest height?</h2>
@@ -796,9 +790,23 @@ Creating a Map</h2>
 ##  Mean   :  -2.707   Mean   :51.74  
 ##  3rd Qu.:  -1.917   3rd Qu.:52.47  
 ##  Max.   : 116.398   Max.   :55.95</code></pre>
-<pre class="r"><code>#latitude_dogs &lt;- c(-3, 3)
-#longitude_dogs &lt;- c(28, 40)
-#bbox_dogs &lt;- make_bbox(longitude_dogs, latitude_dogs, f = 0.03)</code></pre>
+<pre class="r"><code>#install.packages(mapview)</code></pre>
+<pre class="r"><code>library(mapview)</code></pre>
+<pre class="r"><code>#install.packages(sf)</code></pre>
+<pre class="r"><code>library(sf)</code></pre>
+<pre><code>## Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE</code></pre>
+<pre class="r"><code>#dog_gwas %&gt;% 
+        #filter(longitude != &quot;NA&quot; | latitude != &quot;NA&quot;) %&gt;%
+        #mapview(xcol = &quot;longitude&quot;, ycol = &quot;latitude&quot;, crs = 4269)</code></pre>
+<pre class="r"><code>#dog_gwas_sf &lt;- dog_gwas %&gt;% 
+        #filter(longitude != &quot;NA&quot; | latitude != &quot;NA&quot;) %&gt;%
+        #filter(longitude != &quot;NA&quot; | latitude != &quot;NA&quot;) %&gt;%
+        #filter(longitude != &quot;#N/A&quot; | latitude != &quot;#N/A&quot;) %&gt;%
+        #st_as_sf(coords = c(&quot;longitude&quot;, &quot;latitude&quot;), crs = 4326)</code></pre>
+<pre class="r"><code>#mapview(dog_gwas_sf, map.types = &quot;CartoDB.DarkMatter&quot;) </code></pre>
+<pre class="r"><code>#lat &lt;- c(-107, 117)
+#lon &lt;- c(28, 56)
+#bbox &lt;- make_bbox(c(28, 56), c(-107, 117), f = 0.03)</code></pre>
 <pre class="r"><code>#latitude_dogs_europe &lt;- c(-106, 117)
 #longitude_dogs_europe &lt;- c(28, 40)
 #bbox_dogs_europe &lt;- make_bbox(longitude_dogs_europe, latitude_dogs_europe, f = 0.03)</code></pre>
@@ -806,9 +814,12 @@ Creating a Map</h2>
 #longitude_test &lt;- c(-10, 10)
 #bbox_tests &lt;- make_bbox(longitude_test, latitude_test, f = 0.03)</code></pre>
 <pre class="r"><code>#map &lt;- get_stadiamap(bbox_tests, maptype = &quot;stamen_terrain&quot;, zoom = 7)</code></pre>
-<pre class="r"><code>#map_dogs &lt;- get_stadiamap(bbox_dogs, maptype = &quot;stamen_terrain&quot;, zoom = 7)</code></pre>
+<pre class="r"><code>#map_dogs &lt;- get_stadiamap(bbox, zoom = 7, maptype = &quot;stamen_terrain&quot;)</code></pre>
 <pre class="r"><code>#map_dogs_europe &lt;- get_stadiamap(bbox_dogs_europe, maptype = &quot;stamen_terrain&quot;, zoom = 7)</code></pre>
 <pre class="r"><code>#ggmap(map_dogs)</code></pre>
+<pre class="r"><code>#ggmap(map_dogs) + 
+  #geom_point(data = dog_long, aes(longitude, latitude), size = 0.4)
+  #labs(x = &quot;Longitude&quot;, y = &quot;Latitude&quot;, title = &quot;Shark Incident Coastal California, 1950-2022&quot;)</code></pre>
 </div>
 </div>
 

@@ -1,0 +1,15 @@
+"0","dog_gwas_grouped_sf %>% "
+"0","        filter(height_category == ""small"")"
+"1","Simple feature collection with 13 features and 17 fields"
+"1","
+"
+"1","Geometry type: POINT
+"
+"1","Dimension:     XY
+"
+"1","Bounding box:  "
+"1","xmin: 28.59176 ymin: -106.1224 xmax: 53.415 ymax: 116.398"
+"1","
+"
+"1","Geodetic CRS:  WGS 84
+"

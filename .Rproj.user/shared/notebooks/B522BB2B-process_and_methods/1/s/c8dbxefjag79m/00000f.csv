@@ -1,0 +1,3 @@
+"0","dog_gwas %>%"
+"0","  group_by(igf1_as_genotype)%>%"
+"0","  summarise(meanbodymass=mean(body_mass_kg, na.rm=T), meanheight=mean(height_cm, na.rm=T))"

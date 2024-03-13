@@ -2,7 +2,7 @@
 title: "tidy_data"
 output: 
   html_document: 
-    keep_md: yes
+    keep_md: true
 date: "2024-03-12"
 ---
 
@@ -17,10 +17,10 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.4
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
 ## ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
 ## ✔ purrr     1.0.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
@@ -232,6 +232,14 @@ dog <- dog %>%
 ## ! NAs introduced by coercion
 ```
 
+## Selecting Variables of Interest
+
+
+```r
+dog <- dog %>% 
+        select(!c(sample_id, type, coverage_all, coverage_x, bio_project, bio_sample, group_in_phylogenetic_analyses_d_statistics))
+```
+
 ## Saving the cleaned up data set as new file     
 
 
@@ -245,8 +253,8 @@ dog <- dog %>%
 ```r
 dog_long <- dog %>%
         mutate(height_category = case_when(height_cm <= 20.0 ~ "small",
-                                           height_cm > 20.0 & height_cm < 73.0 ~ "medium",
-                                           height_cm >= 73.0 ~ "large")) %>% 
+                                           height_cm > 20.0 & height_cm < 70.0 ~ "medium",
+                                           height_cm >= 70.0 ~ "large")) %>% 
         filter(height_category == "small" | height_category == "large") %>% 
         pivot_longer(cols = starts_with("chr15"),
                      names_to = "chr_location",
@@ -255,7 +263,7 @@ dog_long <- dog %>%
 
 
 ```r
-#write_csv(dog, "dog_long.csv") #saving the clean data
+write_csv(dog_long, "dog_long.csv")
 ```
 
 ## Creating and saving an object with only dogs used in the GWAS.  

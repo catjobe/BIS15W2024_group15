@@ -1,0 +1,10 @@
+"0","map_dogs <- get_stadiamap(bbox, zoom = 7, maptype = ""stamen_terrain"")"
+"2","[36mℹ[39m © Stadia Maps © Stamen Design © OpenMapTiles © OpenStreetMap contributors.
+"
+"2","Warning: NaNs produced"
+"2","Warning: NaNs produced"
+"2","Warning: NaNs produced"
+"2","Warning: NaNs produced"
+"2","Error in get_stamen_url(maptype = maptype, zoom = zoom, x = row[""x""],  : 
+  is.wholenumber(x) || !(0 <= x && x < 2^zoom) is not TRUE
+"

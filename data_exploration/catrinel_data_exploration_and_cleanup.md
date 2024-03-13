@@ -2,7 +2,7 @@
 title: "Data Exploration and Processing"
 output: 
   html_document: 
-    keep_md: yes
+    keep_md: true
 date: "2024-03-05"
 ---
 
@@ -71,7 +71,7 @@ library(shinydashboard)
 
 
 ```r
-dog <- read_csv(file = "../dog_breeds_data/dogbreeddataset.xlsx - A.csv")
+dog <- read_csv(file = "../data/dogbreeddataset.xlsx - A.csv")
 ```
 
 ```
@@ -280,24 +280,18 @@ dog %>%
        group_by(breed) %>% 
         summarize(mean_body_weight = mean(body_mass_kg, na.rm = T)) %>% 
         filter(mean_body_weight != "NaN") %>% 
-        arrange(desc(mean_body_weight))
+        arrange(desc(mean_body_weight)) %>% 
+        summary()
 ```
 
 ```
-## # A tibble: 207 × 2
-##    breed                   mean_body_weight
-##    <chr>                              <dbl>
-##  1 CaucasianOvcharka                   75  
-##  2 Boerboel                            73  
-##  3 EnglishMastiff                      70.3
-##  4 SaintBernard                        70.3
-##  5 TibetanMastiff                      70.3
-##  6 TosaInu                             68  
-##  7 GreatDane                           62.4
-##  8 GreaterSwissMountainDog             60  
-##  9 NeapolitanMastiff                   60  
-## 10 DogueDeBordeaux                     59.5
-## # ℹ 197 more rows
+##     breed           mean_body_weight
+##  Length:207         Min.   : 1.80   
+##  Class :character   1st Qu.:10.00   
+##  Mode  :character   Median :21.50   
+##                     Mean   :23.69   
+##                     3rd Qu.:32.00   
+##                     Max.   :75.00
 ```
 
 ## Which breed of dog has the largest height?    
@@ -592,11 +586,56 @@ dog_long %>%
 ##  Max.   : 116.398   Max.   :55.95
 ```
 
+```r
+#install.packages(mapview)
+```
+
 
 ```r
-#latitude_dogs <- c(-3, 3)
-#longitude_dogs <- c(28, 40)
-#bbox_dogs <- make_bbox(longitude_dogs, latitude_dogs, f = 0.03)
+library(mapview)
+```
+
+
+```r
+#install.packages(sf)
+```
+
+
+```r
+library(sf)
+```
+
+```
+## Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE
+```
+
+
+```r
+#dog_gwas %>% 
+        #filter(longitude != "NA" | latitude != "NA") %>%
+        #mapview(xcol = "longitude", ycol = "latitude", crs = 4269)
+```
+
+
+```r
+#dog_gwas_sf <- dog_gwas %>% 
+        #filter(longitude != "NA" | latitude != "NA") %>%
+        #filter(longitude != "NA" | latitude != "NA") %>%
+        #filter(longitude != "#N/A" | latitude != "#N/A") %>%
+        #st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
+```
+
+
+```r
+#mapview(dog_gwas_sf, map.types = "CartoDB.DarkMatter") 
+```
+
+
+
+```r
+#lat <- c(-107, 117)
+#lon <- c(28, 56)
+#bbox <- make_bbox(c(28, 56), c(-107, 117), f = 0.03)
 ```
 
 
@@ -620,7 +659,7 @@ dog_long %>%
 
 
 ```r
-#map_dogs <- get_stadiamap(bbox_dogs, maptype = "stamen_terrain", zoom = 7)
+#map_dogs <- get_stadiamap(bbox, zoom = 7, maptype = "stamen_terrain")
 ```
 
 
@@ -632,3 +671,13 @@ dog_long %>%
 ```r
 #ggmap(map_dogs)
 ```
+
+
+
+```r
+#ggmap(map_dogs) + 
+  #geom_point(data = dog_long, aes(longitude, latitude), size = 0.4)
+  #labs(x = "Longitude", y = "Latitude", title = "Shark Incident Coastal California, 1950-2022")
+```
+
+

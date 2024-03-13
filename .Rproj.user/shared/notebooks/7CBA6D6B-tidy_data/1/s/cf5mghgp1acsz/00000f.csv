@@ -1,0 +1,1 @@
+"0","dog_gwas <- filter(dog, used_for_gwas == ""Yes"")"

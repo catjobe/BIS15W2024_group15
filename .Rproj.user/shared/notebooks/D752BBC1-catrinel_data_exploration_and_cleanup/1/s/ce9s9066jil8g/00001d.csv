@@ -1,0 +1,4 @@
+"0","dog_gwas_sf <- dog_gwas %>% "
+"0","        filter(longitude != ""NA"" | latitude != ""NA"") %>%"
+"0","        filter(longitude != ""#N/A"" | latitude != ""#N/A"") %>%"
+"0","        st_as_sf(coords = c(""longitude"", ""latitude""), crs = 4326)"

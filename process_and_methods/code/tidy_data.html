@@ -359,10 +359,10 @@ display: none;
 <h2>Loading the Libraries</h2>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.4
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
 ## ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
 ## ✔ purrr     1.0.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
@@ -520,6 +520,11 @@ is not desired for variables including <code>body_mass_kg</code>,
 ## Caused by warning:
 ## ! NAs introduced by coercion</code></pre>
 </div>
+<div id="selecting-variables-of-interest" class="section level2">
+<h2>Selecting Variables of Interest</h2>
+<pre class="r"><code>dog &lt;- dog %&gt;% 
+        select(!c(sample_id, type, coverage_all, coverage_x, bio_project, bio_sample, group_in_phylogenetic_analyses_d_statistics))</code></pre>
+</div>
 <div id="saving-the-cleaned-up-data-set-as-new-file" class="section level2">
 <h2>Saving the cleaned up data set as new file</h2>
 <pre class="r"><code>#write_csv(dog, &quot;clean_dog_data.csv&quot;) #saving the clean data</code></pre>
@@ -528,13 +533,13 @@ is not desired for variables including <code>body_mass_kg</code>,
 <h2>Creating and saving new long format object</h2>
 <pre class="r"><code>dog_long &lt;- dog %&gt;%
         mutate(height_category = case_when(height_cm &lt;= 20.0 ~ &quot;small&quot;,
-                                           height_cm &gt; 20.0 &amp; height_cm &lt; 73.0 ~ &quot;medium&quot;,
-                                           height_cm &gt;= 73.0 ~ &quot;large&quot;)) %&gt;% 
+                                           height_cm &gt; 20.0 &amp; height_cm &lt; 70.0 ~ &quot;medium&quot;,
+                                           height_cm &gt;= 70.0 ~ &quot;large&quot;)) %&gt;% 
         filter(height_category == &quot;small&quot; | height_category == &quot;large&quot;) %&gt;% 
         pivot_longer(cols = starts_with(&quot;chr15&quot;),
                      names_to = &quot;chr_location&quot;,
                      values_to = &quot;marker_alleles_data&quot;)</code></pre>
-<pre class="r"><code>#write_csv(dog, &quot;dog_long.csv&quot;) #saving the clean data</code></pre>
+<pre class="r"><code>write_csv(dog_long, &quot;dog_long.csv&quot;)</code></pre>
 </div>
 <div id="creating-and-saving-an-object-with-only-dogs-used-in-the-gwas." class="section level2">
 <h2>Creating and saving an object with only dogs used in the GWAS.</h2>

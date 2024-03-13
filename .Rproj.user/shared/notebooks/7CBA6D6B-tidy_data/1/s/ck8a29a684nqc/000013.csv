@@ -1,0 +1,2 @@
+"0","dog <- dog %>% "
+"0","        select(!c(sample_id, type, coverage_all, coverage_x, bio_project, bio_sample, group_in_phylogenetic_analyses_d_statistics))"

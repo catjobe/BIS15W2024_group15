@@ -1,0 +1,2 @@
+"0","ggmap(map_dogs) + "
+"0","  geom_point(data = dog_long, aes(longitude, latitude), size = 0.4)"
