@@ -3,7 +3,7 @@
     "path": "~/Desktop/BIS15W2024_group15/process_and_methods/code/process_and_methods.Rmd",
     "project_path": "process_and_methods/code/process_and_methods.Rmd",
     "type": "r_markdown",
-    "hash": "1793803039",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1710282347148.0,
@@ -13,8 +13,8 @@
         "source_window_id": "",
         "Source": "Source",
         "last_setup_crc32": "d0171714bb338d19",
-        "cursorPosition": "631,35",
-        "scrollLine": "616"
+        "cursorPosition": "37,0",
+        "scrollLine": "31"
     },
     "folds": "",
     "lastKnownWriteTime": 1710295850,
