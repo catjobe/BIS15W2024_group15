@@ -2,7 +2,7 @@
 
 A BIS 015L - Data Science Group Project analyzing the distributions of dog sizes and analyzing the genetic determinants of dog size.   
 
-This repository includes a dataset on Modern Dog Breeds from the following study: [Natural and human-driven selection of a single non-coding body size variant in ancient and modern canids](https://www.cell.com/current-biology/fulltext/S0960-9822(21)01723-1?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0960982221017231%3Fshowall%3Dtrue#supplementaryMaterial) 
+This repository includes a dataset on Modern Dog Breeds from the following study: [Natural and human-driven selection of a single non-coding body size variant in ancient and modern canids](https://www.cell.com/current-biology/fulltext/S0960-9822(21)01723-1?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0960982221017231%3Fshowall%3Dtrue#supplementaryMaterial).       
 We also included an extra dataset with [country of origin data](https://www.kaggle.com/datasets/marshuu/dog-breeds/data)     
 
 ## Feel Free to Explore our Project Repository!   
