@@ -16,7 +16,7 @@ Our methods and processes are identified in the [process and methods folder](htt
 - Our code for [tidying our datasets](https://github.com/catjobe/BIS15W2024_group15/blob/main/process_and_methods/code/tidy_data.md)       
 - Our data analysis process is described in [this](https://github.com/catjobe/BIS15W2024_group15/blob/main/process_and_methods/code/process_and_methods.md) file     
 
-[Our Applications](https://github.com/catjobe/BIS15W2024_group15/tree/main/process_and_methods/apps).   
+[Our Applications](https://github.com/catjobe/BIS15W2024_group15/tree/main/process_and_methods/apps)   
 - Our [summary Shiny App](https://github.com/catjobe/BIS15W2024_group15/blob/main/process_and_methods/apps/summary_genetics_and_dog_size.R) (with many of our plots)      
 - Our [Interactive Map](https://github.com/catjobe/BIS15W2024_group15/blob/main/process_and_methods/apps/interactive_map.R)    
 
