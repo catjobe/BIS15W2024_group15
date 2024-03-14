@@ -1,8 +1,0 @@
-"0","dog_gwas_pivoted <- dog_gwas %>% "
-"0","        mutate(height_category = case_when(height_cm <= 20.0 ~ ""small"","
-"0","                                           height_cm > 20.0 & height_cm < 73.0 ~ ""medium"","
-"0","                                           height_cm >= 73.0 ~ ""large"")) %>% "
-"0","        filter(height_category == ""small"" | height_category == ""large"") %>% "
-"0","        pivot_longer(cols = starts_with(""chr15""),"
-"0","                     names_to = ""chr_location"","
-"0","                     values_to = ""marker_alleles_data"")"

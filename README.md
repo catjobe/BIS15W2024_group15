@@ -19,7 +19,7 @@ A presentation of our project's findings and code will be included in a PowerPoi
 ### Group Members: Catrinel Berevoescu, Ryan Chu, Jacques Mak, Eric Du      
 
 ### Group Responsibilities
-- Catrinel: organizing repository, tidying data, data analysis
+- Catrinel: organizing repository, tidying data, data analysis, conclusion 
 - Ryan: data analysis
-- Jacques: introduction, context, and slide aesthetics
-- Eric: conclusion
+- Jacques: dataset context, and slide aesthetics
+- Eric: introduction

@@ -206,7 +206,7 @@ mapview(dog_gwas_grouped_sf, zcol = "height_category", legend = TRUE, map.types 
 
 ```{r}
 ui <- dashboardPage(skin = "yellow",
-  dashboardHeader(title = "GWAS Dogs"),
+  dashboardHeader(title = "Dogs Genetics - Size"),
   dashboardSidebar(disable = T),
   dashboardBody(
           fluidPage(
@@ -250,10 +250,15 @@ ui <- dashboardPage(skin = "yellow",
                 ) #closes the box
                 ) #closes the fluid row
         ), #closes the tab panel item
-             tabPanel("Interactive Map",
+             tabPanel("Mean Mass and Heights by Country of Origin",
                 fluidRow(
-                box(title = "Image Options", width = 3,
-                    imageOutput("plot5")
+                box(title = "Mean Weight by Country of Origin", width = 10,
+                    plotOutput("plot5")
+                ) #closes the box
+                ), #closes the fluid row
+                fluidRow(
+                box(title = "Mean Height by Country of Origin", width = 10,
+                    plotOutput("plot6")
                 ) #closes the box
                 ) #closes the fluid row
   ) #closes the tab panel item
@@ -335,11 +340,91 @@ server <- function(input, output, session) {
                         fill = "IGF1 Genotype")+
                 theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
         }) #closes the render plot
-        output$plot5 <- renderImage({
-                mapview(dog_gwas_sf, map.types = "CartoDB.Positron")
+        output$plot5 <- renderPlot({
+                new_dogs_joined %>% 
+                        group_by(country_of_origin) %>%
+                        summarize(mean_mass = mean(body_mass_kg, na.rm = T)) %>%
+                        filter(country_of_origin != "NA") %>%
+                        ggplot(aes(x = country_of_origin, y = mean_mass, fill = country_of_origin)) +
+                        geom_col() +
+                        coord_flip() +
+                        scale_fill_manual(values = spectral)  +
+                        theme_minimal() +
+                        labs(title = "Mean Weight by Country of Origin",
+                        x = "Country of Origin",
+                        y = "Mean Mass (kg)",
+                        fill = "Country of Origin") +
+                        theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
+        }) #closes the render plot
+        output$plot6 <- renderPlot({
+                new_dogs_joined %>% 
+                        group_by(country_of_origin) %>%
+                        summarize(mean_height = mean(height_cm, na.rm = T)) %>%
+                        filter(country_of_origin != "NA") %>%
+                        ggplot(aes(x = country_of_origin, y = mean_height, fill = country_of_origin)) +
+                        geom_col() +
+                        coord_flip() +
+                        scale_fill_manual(values = spectral)  +
+                        theme_minimal() +
+                        labs(title = "Mean Height by Country of Origin",
+                        x = "Country of Origin",
+                        y = "Mean Height (cm)",
+                        fill = "Country of Origin") +
+                        theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
         }) #closes the render plot
 session$onSessionEnded(stopApp)
 }
  shinyApp(ui, server)               
+```
+
+```{r}
+setwd("/Users/catrinelberevoescu/Desktop/potential_data_sets")
+dog_breeds <- read_csv("dog_breeds.csv")
+```
+
+```{r}
+dog_breeds <- dog_breeds %>% clean_names()
+```
+
+```{r}
+dog_breeds <- dog_breeds %>% 
+  mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
+```
+
+```{r}
+dogs_joined <- full_join(dog_gwas, dog_breeds, by="breed")
+```
+
+```{r}
+new_dogs_joined <- dogs_joined %>% 
+  mutate(height_category = case_when(height_cm <= 20.0 ~ "small",
+                                           height_cm > 20.0 & height_cm < 70.0 ~ "medium",
+                                           height_cm >= 70.0 ~ "large")) %>% 
+  pivot_longer(cols = starts_with("chr15"),
+                     names_to = "chr_location",
+                     values_to = "marker_alleles_data") %>% 
+  filter(used_for_gwas == "Yes") %>% 
+  select(breed, country_of_origin, body_mass_kg, height_cm, sex, igf1_as_genotype, height_category, chr_location, marker_alleles_data, common_health_problems) %>% 
+  write_csv("dogs_joined.csv")
+```
+
+```{r}
+library("rworldmap")
+```
+
+```{r}
+n <- joinCountryData2Map(new_dogs_joined, joinCode = "NAME", nameJoinColumn = "country_of_origin")
+```
+
+```{r}
+mapCountryData(n, nameColumnToPlot = "body_mass_kg", mapTitle = "Dog Breed by Mass and Origin")
+```
+
+```{r}
+mapCountryData(n, nameColumnToPlot = "height_cm", mapTitle = "Dog Breed by Height and Origin")
+```
+
+```{r}
+
 ```
 

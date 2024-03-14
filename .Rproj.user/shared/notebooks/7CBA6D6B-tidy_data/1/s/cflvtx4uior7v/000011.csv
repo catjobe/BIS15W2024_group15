@@ -1,2 +1,0 @@
-"0","dog <- dog %>% "
-"0","        filter(!row_number() %in% 1) "

@@ -1,0 +1,9 @@
+"0","new_dogs_joined <- read_csv(""../../data/new_dogs_joined.csv"")"
+"2","[1mRows: [22m[34m4930[39m [1mColumns: [22m[34m10[39m"
+"2","[36m──[39m [1mColumn specification[22m [36m─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m
+[1mDelimiter:[22m "",""
+[31mchr[39m (8): breed, country_of_origin, sex, igf1_as_genotype, height_category, chr_location, marker_alleles_data, common_health_problems
+[32mdbl[39m (2): body_mass_kg, height_cm"
+"2","
+[36mℹ[39m Use `spec()` to retrieve the full column specification for this data.
+[36mℹ[39m Specify the column types or set `show_col_types = FALSE` to quiet this message."

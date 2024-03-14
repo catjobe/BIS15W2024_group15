@@ -67,7 +67,7 @@ library(shinydashboard)
 ##     box
 ```
 
-## Loading the Data Set  
+## Loading the Data Sets  
 
 
 ```r
@@ -105,6 +105,21 @@ dog <- read_csv(file = "../../data/dogbreeddataset.xlsx - A.csv")
 ## • `` -> `...23`
 ## • `` -> `...24`
 ## • `` -> `...25`
+```
+
+
+```r
+dog_breeds <- read_csv("../../data/dog_breeds.csv") #this dataset includes country of origin information, found on kaggle
+```
+
+```
+## Rows: 117 Columns: 8
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: ","
+## chr (8): Breed, Country of Origin, Fur Color, Height (in), Color of Eyes, Lo...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
 ## Fixing the Headers
@@ -263,7 +278,7 @@ dog_long <- dog %>%
 
 
 ```r
-write_csv(dog_long, "dog_long.csv")
+#write_csv(dog_long, "dog_long.csv")
 ```
 
 ## Creating and saving an object with only dogs used in the GWAS.  
@@ -276,5 +291,71 @@ dog_gwas <- filter(dog, used_for_gwas == "Yes")
 
 ```r
 #write_csv(dog_gwas, "dog_gwas.csv") 
+```
+
+## Cleaning the Second Data Set
+
+
+```r
+dog_breeds <- dog_breeds %>% clean_names()
+```
+
+
+```r
+dog_breeds <- dog_breeds %>% 
+  mutate(across(where(is.character), str_remove_all, pattern = fixed(" "))) #removing the spaces in the `breed` variable
+```
+
+```
+## Warning: There was 1 warning in `mutate()`.
+## ℹ In argument: `across(where(is.character), str_remove_all, pattern = fixed("
+##   "))`.
+## Caused by warning:
+## ! The `...` argument of `across()` is deprecated as of dplyr 1.1.0.
+## Supply arguments directly to `.fns` through an anonymous function instead.
+## 
+##   # Previously
+##   across(a:b, mean, na.rm = TRUE)
+## 
+##   # Now
+##   across(a:b, \(x) mean(x, na.rm = TRUE))
+```
+
+## Combining the Two Data Sets
+
+
+```r
+dogs_joined <- full_join(dog_gwas, dog_breeds, by = "breed") #joining the two datasets
+```
+
+```
+## Warning in full_join(dog_gwas, dog_breeds, by = "breed"): Detected an unexpected many-to-many relationship between `x` and `y`.
+## ℹ Row 22 of `x` matches multiple rows in `y`.
+## ℹ Row 57 of `y` matches multiple rows in `x`.
+## ℹ If a many-to-many relationship is expected, set `relationship =
+##   "many-to-many"` to silence this warning.
+```
+
+
+```r
+new_dogs_joined <- dogs_joined %>% 
+  mutate(height_category = case_when(height_cm <= 20.0 ~ "small",
+                                           height_cm > 20.0 & height_cm < 70.0 ~ "medium",
+                                           height_cm >= 70.0 ~ "large")) %>% 
+  pivot_longer(cols = starts_with("chr15"),
+                     names_to = "chr_location",
+                     values_to = "marker_alleles_data") %>% 
+  filter(used_for_gwas == "Yes") %>% 
+  select(breed, country_of_origin, body_mass_kg, height_cm, sex, igf1_as_genotype, height_category, chr_location, marker_alleles_data, common_health_problems)
+```
+
+
+```r
+#write_csv(dogs_joined, "dogs_joined.csv")
+```
+
+
+```r
+#write_csv(new_dogs_joined, "new_dogs_joined.csv")
 ```
 

@@ -15,6 +15,13 @@ dog_long <- read_csv(file = "../../data/dog_long.csv")
 
 dog_gwas <- read_csv("../../data/dog_gwas.csv")
 
+dogs_joined <- read_csv("../../data/dogs_joined.csv")
+
+new_dogs_joined <- read_csv("../../data/new_dogs_joined.csv")
+
+spectral <- colorRampPalette(brewer.pal(8, "Spectral"))(23)
+pie(rep(1, length(spectral)), col = spectral , main="") 
+
 dog_gwas_pivoted <- dog_gwas %>% 
         mutate(height_category = case_when(height_cm <= 20.0 ~ "small",
                                            height_cm > 20.0 & height_cm < 73.0 ~ "medium",
@@ -34,7 +41,7 @@ dog_gwas_mass_pivoted <- dog_gwas %>%
                      values_to = "marker_alleles_data")
 
 ui <- dashboardPage(skin = "yellow",
-                    dashboardHeader(title = "GWAS Dogs"),
+                    dashboardHeader(title = "Dogs Genetics - Size"),
                     dashboardSidebar(disable = T),
                     dashboardBody(
                             fluidPage(
@@ -75,6 +82,18 @@ ui <- dashboardPage(skin = "yellow",
                                                              ), #closes the box
                                                              box(title = "Table of Mean Height by IGF1 Genotype", width = 10,
                                                                  tableOutput("table2")
+                                                             ) #closes the box
+                                                     ) #closes the fluid row
+                                            ), #closes the tab panel item
+                                            tabPanel("Mean Mass and Heights by Country of Origin",
+                                                     fluidRow(
+                                                             box(title = "Mean Weight by Country of Origin", width = 10,
+                                                                 plotOutput("plot5")
+                                                             ) #closes the box
+                                                     ), #closes the fluid row
+                                                     fluidRow(
+                                                             box(title = "Mean Height by Country of Origin", width = 10,
+                                                                 plotOutput("plot6")
                                                              ) #closes the box
                                                      ) #closes the fluid row
                                             ) #closes the tab panel item
@@ -156,6 +175,38 @@ server <- function(input, output, session) {
                              fill = "IGF1 Genotype")+
                         theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
         }) #closes the render plot
+        output$plot5 <- renderPlot({
+                new_dogs_joined %>% 
+                        group_by(country_of_origin) %>%
+                        summarize(mean_mass = mean(body_mass_kg, na.rm = T)) %>%
+                        filter(country_of_origin != "NA") %>%
+                        ggplot(aes(x = country_of_origin, y = mean_mass, fill = country_of_origin)) +
+                        geom_col() +
+                        coord_flip() +
+                        scale_fill_manual(values = spectral)  +
+                        theme_minimal() +
+                        labs(title = "Mean Weight by Country of Origin",
+                             x = "Country of Origin",
+                             y = "Mean Mass (kg)",
+                             fill = "Country of Origin") +
+                        theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
+        }) #closes the render plot
+        output$plot6 <- renderPlot({
+                new_dogs_joined %>% 
+                        group_by(country_of_origin) %>%
+                        summarize(mean_height = mean(height_cm, na.rm = T)) %>%
+                        filter(country_of_origin != "NA") %>%
+                        ggplot(aes(x = country_of_origin, y = mean_height, fill = country_of_origin)) +
+                        geom_col() +
+                        coord_flip() +
+                        scale_fill_manual(values = spectral)  +
+                        theme_minimal() +
+                        labs(title = "Mean Height by Country of Origin",
+                             x = "Country of Origin",
+                             y = "Mean Height (cm)",
+                             fill = "Country of Origin") +
+                        theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
+        }) #closes the render plot
         session$onSessionEnded(stopApp)
 }
-shinyApp(ui, server)               
+shinyApp(ui, server)

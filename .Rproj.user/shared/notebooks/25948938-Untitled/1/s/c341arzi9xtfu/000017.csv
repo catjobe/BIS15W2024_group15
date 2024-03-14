@@ -1,0 +1,10 @@
+"0","setwd(""/Users/catrinelberevoescu/Desktop/potential_data_sets"")"
+"2","Warning: The working directory was changed to /Users/catrinelberevoescu/Desktop/potential_data_sets inside a notebook chunk. The working directory will be reset when the chunk is finished running. Use the knitr root.dir option in the setup chunk to change the working directory for notebook chunks."
+"0","dog_breeds <- read_csv(""dog_breeds.csv"")"
+"2","[1mRows: [22m[34m117[39m [1mColumns: [22m[34m8[39m"
+"2","[36m──[39m [1mColumn specification[22m [36m────────────────────────────────────────────────────────────────────────────────────────────────[39m
+[1mDelimiter:[22m "",""
+[31mchr[39m (8): Breed, Country of Origin, Fur Color, Height (in), Color of Eyes, Longevity (yrs), Character Traits, Common ..."
+"2","
+[36mℹ[39m Use `spec()` to retrieve the full column specification for this data.
+[36mℹ[39m Specify the column types or set `show_col_types = FALSE` to quiet this message."

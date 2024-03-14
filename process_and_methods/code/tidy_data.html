@@ -390,8 +390,8 @@ library(shinydashboard)</code></pre>
 ## 
 ##     box</code></pre>
 </div>
-<div id="loading-the-data-set" class="section level2">
-<h2>Loading the Data Set</h2>
+<div id="loading-the-data-sets" class="section level2">
+<h2>Loading the Data Sets</h2>
 <pre class="r"><code>dog &lt;- read_csv(file = &quot;../../data/dogbreeddataset.xlsx - A.csv&quot;)</code></pre>
 <pre><code>## New names:
 ## Rows: 1299 Columns: 25
@@ -423,6 +423,14 @@ library(shinydashboard)</code></pre>
 ## • `` -&gt; `...23`
 ## • `` -&gt; `...24`
 ## • `` -&gt; `...25`</code></pre>
+<pre class="r"><code>dog_breeds &lt;- read_csv(&quot;../../data/dog_breeds.csv&quot;) #this dataset includes country of origin information, found on kaggle</code></pre>
+<pre><code>## Rows: 117 Columns: 8
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (8): Breed, Country of Origin, Fur Color, Height (in), Color of Eyes, Lo...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 <div id="fixing-the-headers" class="section level2">
 <h2>Fixing the Headers</h2>
@@ -539,12 +547,50 @@ is not desired for variables including <code>body_mass_kg</code>,
         pivot_longer(cols = starts_with(&quot;chr15&quot;),
                      names_to = &quot;chr_location&quot;,
                      values_to = &quot;marker_alleles_data&quot;)</code></pre>
-<pre class="r"><code>write_csv(dog_long, &quot;dog_long.csv&quot;)</code></pre>
+<pre class="r"><code>#write_csv(dog_long, &quot;dog_long.csv&quot;)</code></pre>
 </div>
 <div id="creating-and-saving-an-object-with-only-dogs-used-in-the-gwas." class="section level2">
 <h2>Creating and saving an object with only dogs used in the GWAS.</h2>
 <pre class="r"><code>dog_gwas &lt;- filter(dog, used_for_gwas == &quot;Yes&quot;)</code></pre>
 <pre class="r"><code>#write_csv(dog_gwas, &quot;dog_gwas.csv&quot;) </code></pre>
+</div>
+<div id="cleaning-the-second-data-set" class="section level2">
+<h2>Cleaning the Second Data Set</h2>
+<pre class="r"><code>dog_breeds &lt;- dog_breeds %&gt;% clean_names()</code></pre>
+<pre class="r"><code>dog_breeds &lt;- dog_breeds %&gt;% 
+  mutate(across(where(is.character), str_remove_all, pattern = fixed(&quot; &quot;))) #removing the spaces in the `breed` variable</code></pre>
+<pre><code>## Warning: There was 1 warning in `mutate()`.
+## ℹ In argument: `across(where(is.character), str_remove_all, pattern = fixed(&quot;
+##   &quot;))`.
+## Caused by warning:
+## ! The `...` argument of `across()` is deprecated as of dplyr 1.1.0.
+## Supply arguments directly to `.fns` through an anonymous function instead.
+## 
+##   # Previously
+##   across(a:b, mean, na.rm = TRUE)
+## 
+##   # Now
+##   across(a:b, \(x) mean(x, na.rm = TRUE))</code></pre>
+</div>
+<div id="combining-the-two-data-sets" class="section level2">
+<h2>Combining the Two Data Sets</h2>
+<pre class="r"><code>dogs_joined &lt;- full_join(dog_gwas, dog_breeds, by = &quot;breed&quot;) #joining the two datasets</code></pre>
+<pre><code>## Warning in full_join(dog_gwas, dog_breeds, by = &quot;breed&quot;): Detected an unexpected many-to-many relationship between `x` and `y`.
+## ℹ Row 22 of `x` matches multiple rows in `y`.
+## ℹ Row 57 of `y` matches multiple rows in `x`.
+## ℹ If a many-to-many relationship is expected, set `relationship =
+##   &quot;many-to-many&quot;` to silence this warning.</code></pre>
+<pre class="r"><code>new_dogs_joined &lt;- dogs_joined %&gt;% 
+  mutate(height_category = case_when(height_cm &lt;= 20.0 ~ &quot;small&quot;,
+                                           height_cm &gt; 20.0 &amp; height_cm &lt; 70.0 ~ &quot;medium&quot;,
+                                           height_cm &gt;= 70.0 ~ &quot;large&quot;)) %&gt;% 
+  pivot_longer(cols = starts_with(&quot;chr15&quot;),
+                     names_to = &quot;chr_location&quot;,
+                     values_to = &quot;marker_alleles_data&quot;) %&gt;% 
+  filter(used_for_gwas == &quot;Yes&quot;) %&gt;% 
+  select(breed, country_of_origin, body_mass_kg, height_cm, sex, igf1_as_genotype, height_category, chr_location, marker_alleles_data, common_health_problems)</code></pre>
+<pre class="r"><code>#write_csv(dogs_joined, &quot;dogs_joined.csv&quot;)</code></pre>
+<pre class="r"><code>#write_csv(new_dogs_joined, &quot;new_dogs_joined.csv&quot;)</code></pre>
 </div>
 
 

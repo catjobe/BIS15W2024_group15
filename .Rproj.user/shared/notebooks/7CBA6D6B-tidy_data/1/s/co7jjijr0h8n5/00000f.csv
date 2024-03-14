@@ -1,0 +1,2 @@
+"0","dog_breeds <- dog_breeds %>% "
+"0","  mutate(across(where(is.character), str_remove_all, pattern = fixed("" ""))) #removing the spaces in the `breed` variable"

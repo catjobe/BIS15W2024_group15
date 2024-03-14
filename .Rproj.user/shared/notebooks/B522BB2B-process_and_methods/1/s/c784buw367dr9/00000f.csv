@@ -1,5 +1,0 @@
-"0","dog %>% "
-"0","       group_by(breed) %>% "
-"0","        summarize(mean_body_weight = mean(body_mass_kg, na.rm = T)) %>% "
-"0","        filter(mean_body_weight != ""NaN"") %>% "
-"0","        arrange(desc(mean_body_weight))"

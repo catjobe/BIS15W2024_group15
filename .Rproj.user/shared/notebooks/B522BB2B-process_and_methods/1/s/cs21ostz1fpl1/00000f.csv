@@ -1,0 +1,2 @@
+"0","spectral <- colorRampPalette(brewer.pal(8, ""Spectral""))(23)"
+"0","pie(rep(1, length(spectral)), col = spectral , main="""") "

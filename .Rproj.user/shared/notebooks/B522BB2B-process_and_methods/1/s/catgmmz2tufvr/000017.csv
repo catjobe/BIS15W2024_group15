@@ -1,2 +1,0 @@
-"0","mapview(dog_geographic_distribution, zcol = ""height_category"", legend = TRUE, map.types = ""CartoDB.Positron"") "
-"2","Warning: bounding box has potentially an invalid value range for longlat data"
