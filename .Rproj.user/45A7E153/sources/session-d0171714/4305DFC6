@@ -15,10 +15,10 @@
         "totalObservations": "456",
         "displayedObservations": "456",
         "variables": "18",
-        "cacheKey": "787E55BF",
+        "cacheKey": "277BF68B",
         "object": "dog_gwas",
         "environment": "",
-        "contentUrl": "grid_resource/gridviewer.html?env=&obj=dog_gwas&cache_key=787E55BF&max_display_columns=50",
+        "contentUrl": "grid_resource/gridviewer.html?env=&obj=dog_gwas&cache_key=277BF68B&max_display_columns=50",
         "preview": "0",
         "source_window_id": "",
         "Source": "Source"

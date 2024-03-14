@@ -17,10 +17,10 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.4
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
 ## ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
 ## ✔ purrr     1.0.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
@@ -586,8 +586,8 @@ dog %>%
 ```r
 dog %>%
   group_by(igf1_as_genotype) %>%
-  summarise(meanbodymass=mean(body_mass_kg, na.rm=T)) %>%
-  ggplot(aes(x=igf1_as_genotype, y=meanbodymass))+
+  summarize(meanbodymass=mean(body_mass_kg, na.rm=T)) %>%
+  ggplot(aes(x = igf1_as_genotype, y = meanbodymass))+
   geom_col()+
   labs(title = "IGF1 Mass", x = "IGF1 Genotype", y= "Mean Body Mass (kg)")+
   theme(plot.title = element_text(size = rel(1.3)))
@@ -638,7 +638,7 @@ dog_gwas %>%
   summarise(meanbodymass=mean(body_mass_kg, na.rm=T)) %>%
   ggplot(aes(x=igf1_as_genotype, y=meanbodymass))+
   geom_col()+
-  labs(title = "IGF1 Mass", x = "IGF1 Genotype", y= "Mean Body Mass (kg)")+
+  labs(title = "IGF1 GWAS Mass", x = "IGF1 Genotype", y= "Mean Body Mass (kg)")+
   theme(plot.title = element_text(size = rel(1.3)))
 ```
 
@@ -652,7 +652,7 @@ dog_gwas %>%
   summarise(meanheight=mean(height_cm, na.rm=T)) %>%
   ggplot(aes(x=igf1_as_genotype, y=meanheight))+
   geom_col()+
-  labs(title = "IGF1 Height", x = "IGF1 Genotype", y= "Mean Height(cm)")+
+  labs(title = "IGF1 GWAS Height", x = "IGF1 Genotype", y= "Mean Height(cm)")+
   theme(plot.title = element_text(size = rel(1.3)))
 ```
 
