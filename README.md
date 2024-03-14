@@ -6,20 +6,24 @@ This repository includes a dataset on Modern Dog Breeds from the following study
 
 ## Feel Free to Explore our Project Repository!   
 
-Examine our data in the [data folder](https://github.com/catjobe/BIS15W2024_group15/tree/main/data), which contains the original data, a cleaned-up data file, and a pivoted data file.   
+Examine our data in the [data folder](https://github.com/catjobe/BIS15W2024_group15/tree/main/data), which includes the original data, cleaned-up data files, and pivoted data files.   
 
-Our data exploration process is documented in the [data exploration folder](https://github.com/catjobe/BIS15W2024_group15/tree/main/data_exploration).   
+Our data exploration process is documented in the [data exploration folder](https://github.com/catjobe/BIS15W2024_group15/tree/main/data_exploration).    
 
 Our methods and processes are identified in the [process and methods folder](https://github.com/catjobe/BIS15W2024_group15/tree/main/process_and_methods), which contains the following information:      
-[Our Code](https://github.com/catjobe/BIS15W2024_group15/tree/main/process_and_methods/code)   
-[Applications](https://github.com/catjobe/BIS15W2024_group15/tree/main/process_and_methods/apps)    
+[Our Code](https://github.com/catjobe/BIS15W2024_group15/tree/main/process_and_methods/code)
+- Our code for [tidying our datasets](https://github.com/catjobe/BIS15W2024_group15/blob/main/process_and_methods/code/tidy_data.md)       
+- Our data analysis process is described in [this](https://github.com/catjobe/BIS15W2024_group15/blob/main/process_and_methods/code/process_and_methods.md) file     
+[Applications](https://github.com/catjobe/BIS15W2024_group15/tree/main/process_and_methods/apps).   
+- Our [summary Shiny App](https://github.com/catjobe/BIS15W2024_group15/blob/main/process_and_methods/apps/summary_genetics_and_dog_size.R) (with many of our plots)      
+- Our [Interactive Map](https://github.com/catjobe/BIS15W2024_group15/blob/main/process_and_methods/apps/interactive_map.R)    
 
 A presentation of our project's findings and code will be included in a PowerPoint within the [presentation folder](https://github.com/catjobe/BIS15W2024_group15/tree/main/presentation).   
 
 ### Group Members: Catrinel Berevoescu, Ryan Chu, Jacques Mak, Eric Du      
 
-### Group Responsibilities
-- Catrinel: organizing repository, tidying data, data analysis, conclusion 
-- Ryan: data analysis
-- Jacques: dataset context, and slide aesthetics
-- Eric: introduction
+### Some Key Group Responsibilities    
+- Catrinel: organizing repository, tidying data, data analysis    
+- Ryan: data analysis    
+- Jacques: dataset context, and slide aesthetics    
+- Eric: introduction and background     
