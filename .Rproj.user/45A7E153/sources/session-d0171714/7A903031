@@ -1,0 +1,26 @@
+{
+    "id": "7A903031",
+    "path": "~/Desktop/BIS15W2024_group15/process_and_methods/apps/gwas_alleles_key_loci_app.R",
+    "project_path": "process_and_methods/apps/gwas_alleles_key_loci_app.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1710432817616.0,
+    "source_on_save": false,
+    "relative_order": 18,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "9,0",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1710433241,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1710433241252,
+    "read_only": false,
+    "read_only_alternatives": []
+}

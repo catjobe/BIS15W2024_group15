@@ -87,6 +87,11 @@ ui <- dashboardPage(skin = "yellow",
                                             ), #closes the tab panel item
                                             tabPanel("Mean Mass and Heights by Country of Origin",
                                                      fluidRow(
+                                                             box(title = "Summary by Country of Origin", width = 12,
+                                                                 tableOutput("table3")
+                                                             ) #closes the box
+                                                     ), #closes the fluid row
+                                                     fluidRow(
                                                              box(title = "Mean Weight by Country of Origin", width = 10,
                                                                  plotOutput("plot5")
                                                              ) #closes the box
@@ -199,7 +204,7 @@ server <- function(input, output, session) {
                         ggplot(aes(x = country_of_origin, y = mean_height, fill = country_of_origin)) +
                         geom_col() +
                         coord_flip() +
-                        scale_fill_manual(values = spectral)  +
+                        scale_fill_manual(values = spectral) +
                         theme_minimal() +
                         labs(title = "Mean Height by Country of Origin",
                              x = "Country of Origin",
@@ -207,6 +212,19 @@ server <- function(input, output, session) {
                              fill = "Country of Origin") +
                         theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
         }) #closes the render plot
+        output$table3 <- renderTable({
+                new_dogs_joined %>% 
+                        filter(country_of_origin != "NA") %>%
+                        group_by(country_of_origin) %>%
+                        summarize(min_height = min(height_cm, na.rm = T),
+                                  mean_height = mean(height_cm, na.rm = T),
+                                  max_height = max(height_cm, na.rm = T),
+                                  min_mass = min(body_mass_kg, na.rm = T),
+                                  mean_mass = mean(body_mass_kg, na.rm = T),
+                                  max_mass = max(body_mass_kg, na.rm = T),
+                                  n()) %>% 
+                        arrange(desc(mean_mass))
+        }) #closes the render table
         session$onSessionEnded(stopApp)
 }
-shinyApp(ui, server)
+shinyApp(ui, server)   

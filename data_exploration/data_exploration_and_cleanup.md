@@ -17,10 +17,10 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.4
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
 ## ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
 ## ✔ purrr     1.0.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
@@ -43,13 +43,21 @@ library(janitor)
 
 ```r
 library(naniar)
+library(ggmap)
+```
+
+```
+## ℹ Google's Terms of Service: <https://mapsplatform.google.com>
+##   Stadia Maps' Terms of Service: <https://stadiamaps.com/terms-of-service/>
+##   OpenStreetMap's Tile Usage Policy: <https://operations.osmfoundation.org/policies/tiles/>
+## ℹ Please cite ggmap if you use it! Use `citation("ggmap")` for details.
 ```
 
 ## Loading the Data Set   
 
 
 ```r
-dog <- read_csv(file = "/Users/catjobe/Desktop/BIS15W2024_group15/dog_breeds_data/dogbreeddataset.xlsx - A.csv")
+dog <- read_csv(file = "../data/dogbreeddataset.xlsx - A.csv")
 ```
 
 ```
@@ -191,7 +199,23 @@ miss_var_summary(dog)
 ```r
 dog <- dog %>% 
         mutate(body_mass_kg = as.numeric(body_mass_kg)) %>% 
-        mutate(height_cm = as.numeric(height_cm))
+        mutate(height_cm = as.numeric(height_cm)) %>% 
+        mutate(latitude = as.numeric(latitude)) %>% 
+        mutate(longitude = as.numeric(longitude))
+```
+
+```
+## Warning: There was 1 warning in `mutate()`.
+## ℹ In argument: `latitude = as.numeric(latitude)`.
+## Caused by warning:
+## ! NAs introduced by coercion
+```
+
+```
+## Warning: There was 1 warning in `mutate()`.
+## ℹ In argument: `longitude = as.numeric(longitude)`.
+## Caused by warning:
+## ! NAs introduced by coercion
 ```
 
 # Data Exploration   
@@ -227,7 +251,7 @@ n_distinct(dog$height_cm)
 ## [1] 104
 ```
 
-## Which species of dog has the largest body mass?    
+## Which breed of dog has the largest body mass?    
 
 
 ```r
@@ -255,7 +279,7 @@ dog %>%
 ## # ℹ 197 more rows
 ```
 
-## Which species of dog has the largest height?    
+## Which breed of dog has the largest height?    
 
 
 ```r
@@ -283,6 +307,34 @@ dog %>%
 ## # ℹ 191 more rows
 ```
 
+## Which breed of dog has the smallest height?    
+
+
+```r
+dog %>% 
+       group_by(breed) %>% 
+        summarize(mean_height = mean(height_cm, na.rm = T)) %>% 
+        filter(mean_height != "NaN") %>% 
+        arrange(mean_height)
+```
+
+```
+## # A tibble: 201 × 2
+##    breed            mean_height
+##    <chr>                  <dbl>
+##  1 YorkshireTerrier        16.5
+##  2 BrusselsGriffon         17.8
+##  3 Chihuahua               19  
+##  4 Pekingese               19  
+##  5 Pomeranian              20  
+##  6 Maltese                 22.5
+##  7 BiewerTerrier           22.9
+##  8 JapaneseChin            23.5
+##  9 NorfolkTerrier          24  
+## 10 Papillon                24  
+## # ℹ 191 more rows
+```
+
 ## How do the top 5 heaviest dogs compare by sex?       
 
 
@@ -303,7 +355,7 @@ dog %>%
         theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
 ```
 
-![](data_exploration_and_cleanup_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
+![](data_exploration_and_cleanup_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
 
 It seems that this dataset has strange or incomplete measurements for mass, so it may be more worthwhile to focus on height!   
 
@@ -327,7 +379,7 @@ dog %>%
         theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
 ```
 
-![](data_exploration_and_cleanup_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+![](data_exploration_and_cleanup_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
 
 This appears to show that there are also shows that there a lot of missing values in this dataset!   
 
@@ -339,3 +391,43 @@ dog <- dog %>%
         filter(sex != "NA")
 ```
 
+## Top 5 Tallest Dogs 
+
+
+```r
+dog %>%
+        filter(breed == "GreatDane" | breed == "IrishWolfhound" | breed == "Akbash" | breed == "AnatolianShepherdDog" | breed == "ScottishDeerhound") %>%  
+        group_by(breed) %>% 
+        summarize(mean_body_mass = mean(body_mass_kg, na.rm = T)) %>% 
+        ggplot(aes(x = breed, y = mean_body_mass, fill = breed)) +
+        geom_col(position = "dodge") +
+        labs(title = "Largest Dogs Heights Compared",
+             x = "Breed",
+             y = "Height (cm)",
+             fill = "Breed") +
+        theme(plot.title = element_text(size = rel(1.3), hjust = 0.5))
+```
+
+![](data_exploration_and_cleanup_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
+
+## Examining Geographic Distribution and Creating a Map  
+
+
+
+
+```r
+dog %>% 
+  select(latitude, longitude) %>% 
+  summary()
+```
+
+```
+##     latitude          longitude     
+##  Min.   :-154.548   Min.   :-38.04  
+##  1st Qu.:  -2.899   1st Qu.: 44.42  
+##  Median :  -0.119   Median : 51.17  
+##  Mean   :  11.785   Mean   : 45.73  
+##  3rd Qu.:  13.573   3rd Qu.: 52.51  
+##  Max.   : 151.969   Max.   : 68.12  
+##  NA's   :153        NA's   :153
+```
