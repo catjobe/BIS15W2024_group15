@@ -21,7 +21,7 @@ Our methods and processes are identified in the [process and methods folder](htt
 - Our [summary Shiny App](https://github.com/catjobe/BIS15W2024_group15/blob/main/process_and_methods/apps/summary_genetics_and_dog_size.R) (with many of our plots)      
 - Our [Interactive Map](https://github.com/catjobe/BIS15W2024_group15/blob/main/process_and_methods/apps/interactive_map.R)    
 
-A presentation of our project's findings and code is included in a [PowerPoint presentation](https://github.com/catjobe/BIS15W2024_group15/blob/main/presentation/Dogs%20and%20Genetics.pptx) within the [presentation folder](https://github.com/catjobe/BIS15W2024_group15/tree/main/presentation).   
+A presentation of our project's findings and code is included in a [PowerPoint presentation](https://github.com/catjobe/BIS15W2024_group15/blob/main/presentation/Dogs%20and%20Genetics%20FInal.pptx) within the [presentation folder](https://github.com/catjobe/BIS15W2024_group15/tree/main/presentation) (password = cheesepie).   
 
 ### Group Members: Catrinel Berevoescu, Ryan Chu, Jacques Mak, Eric Du      
 
