@@ -16,3 +16,4 @@ dog_geographic_distribution <- dog_gwas %>%
         st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
 
 mapview(dog_geographic_distribution, zcol = "height_category", legend = TRUE, map.types = "CartoDB.Positron") 
+
